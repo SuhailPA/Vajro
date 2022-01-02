@@ -36,7 +36,9 @@
             <TextView
                 android:id="@+id/itemPriceProduct"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:textStyle="bold"
                 android:text="TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -45,8 +47,10 @@
             <TextView
                 android:id="@+id/itemProductName"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
+                android:gravity="center"
                 android:text="TextView"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@+id/itemPriceProduct"
                 app:layout_constraintEnd_toStartOf="@+id/itemPriceProduct"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -87,11 +91,12 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_percent="0.3" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/removeItemProduct"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="-"
+                app:cornerRadius="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"

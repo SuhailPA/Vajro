@@ -2,6 +2,7 @@ package com.suhail.vajro.data
 
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "productTable")
@@ -19,6 +20,7 @@ data class Product(
     @SerializedName("price")
     val price: String,
     @SerializedName("product_id")
+    @PrimaryKey(autoGenerate = false)
     val productId: String,
     @SerializedName("quantity")
     val quantity: Int,

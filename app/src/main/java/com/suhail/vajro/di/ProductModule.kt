@@ -17,13 +17,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ProductModule {
 
-    @Provides
-    @Singleton
-    fun providesDatabase(app: Application): ProductDatabase =
-        Room.databaseBuilder(
-            app,
-            ProductDatabase::class.java, "product_database"
-        ).build()
+
 
     @Provides
     @Singleton
@@ -36,4 +30,10 @@ object ProductModule {
     @Singleton
     fun providesProductAPI(retrofit: Retrofit) : ProductAPI =
         retrofit.create(ProductAPI::class.java)
+
+    @Provides
+    @Singleton
+    fun providesDatabase(app: Application): ProductDatabase =
+        Room.databaseBuilder(app, ProductDatabase :: class.java, "product_database")
+            .build()
 }
