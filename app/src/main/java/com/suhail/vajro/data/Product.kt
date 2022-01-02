@@ -1,8 +1,10 @@
 package com.suhail.vajro.data
 
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "productTable")
 data class Product(
     @SerializedName("description")
     val description: String,
@@ -12,12 +14,8 @@ data class Product(
     val id: String,
     @SerializedName("image")
     val image: String,
-    @SerializedName("images")
-    val images: List<Any>,
     @SerializedName("name")
     val name: String,
-    @SerializedName("options")
-    val options: List<Any>,
     @SerializedName("price")
     val price: String,
     @SerializedName("product_id")
