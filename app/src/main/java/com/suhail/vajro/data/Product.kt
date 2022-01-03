@@ -23,7 +23,7 @@ data class Product(
     @PrimaryKey(autoGenerate = false)
     val productId: String,
     @SerializedName("quantity")
-    val quantity: Int,
+    var quantity: Int,
     @SerializedName("sku")
     val sku: String,
     @SerializedName("special")

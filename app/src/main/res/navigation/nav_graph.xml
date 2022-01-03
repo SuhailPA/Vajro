@@ -9,5 +9,14 @@
         android:id="@+id/productListScreen"
         android:name="com.suhail.vajro.ui.ProductListScreen"
         android:label="fragment_product_list_screen"
-        tools:layout="@layout/fragment_product_list_screen" />
+        tools:layout="@layout/fragment_product_list_screen" >
+        <action
+            android:id="@+id/action_productListScreen_to_cartFragment"
+            app:destination="@id/cartFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.suhail.vajro.ui.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" />
 </navigation>

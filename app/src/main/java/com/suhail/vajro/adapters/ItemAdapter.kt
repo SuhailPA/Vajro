@@ -10,13 +10,12 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import com.suhail.vajro.R
+import com.suhail.vajro.data.Cart
 import com.suhail.vajro.data.Product
-import org.w3c.dom.Text
 
-class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
+class ItemAdapter (): RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
 
     inner class ViewHolderClass(view:View):RecyclerView.ViewHolder(view){
         val imageView :ImageView = view.findViewById(R.id.itemImageViewProduct)
@@ -24,6 +23,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
         val price : TextView = view.findViewById(R.id.itemPriceProduct)
         val addProduct : Button = view.findViewById(R.id.addItemButton)
         val removeProduct : Button = view.findViewById(R.id.removeItemProduct)
+        val itemCount : TextView = view.findViewById(R.id.itemCount)
     }
 
     private val differCallback = object : DiffUtil.ItemCallback<Product>(){
@@ -36,7 +36,19 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
         }
 
     }
+    private val differCallbackCart = object : DiffUtil.ItemCallback<Cart>(){
+        override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean {
+            return oldItem.productId == newItem.productId
+        }
+
+        override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean {
+            return oldItem == newItem
+        }
+
+
+    }
     val differ = AsyncListDiffer(this,differCallback)
+    val differCart = AsyncListDiffer(this,differCallbackCart)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAdapter.ViewHolderClass {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout_product,parent,false)
@@ -52,7 +64,32 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
         holder.itemName.text = item.name
         holder.price.text = item.price
 
+        holder.addProduct.setOnClickListener {
+            val count = holder.itemCount.text.toString().toInt()
+            holder.itemCount.text = count.plus(1).toString()
+            onAddItemClickListner?.let { it(item) }
+        }
+
+        holder.removeProduct.setOnClickListener {
+            val count = holder.itemCount.text.toString().toInt()
+            if (count>0)holder.itemCount.text = count.minus(1).toString()
+            onRemoveItemClickListner?.let { it(item) }
+        }
+
     }
+
+    private var onRemoveItemClickListner:((Product)->Unit)?=null
+
+    private var onAddItemClickListner:((Product)->Unit)?=null
+
+    fun setOnClickListner(listner:(Product)->Unit){
+            onAddItemClickListner = listner
+        }
+    fun setOnRemoveListner(listner: (Product) -> Unit){
+        onRemoveItemClickListner = listner
+    }
+
+
 
     override fun getItemCount(): Int {
         return differ.currentList.size

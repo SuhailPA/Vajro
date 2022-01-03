@@ -1,8 +1,8 @@
 package com.suhail.vajro.room
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.suhail.vajro.data.Cart
 import com.suhail.vajro.data.Product
 import kotlinx.coroutines.flow.Flow
 
@@ -13,10 +13,26 @@ interface ProductDao {
     @Query("SELECT * FROM productTable")
     fun getAllItems (): Flow<List<Product>>
 
+
     @Query("DELETE  FROM productTable")
     suspend fun deleteAllData()
 
     @Insert
     suspend fun insertProductsToProductTable(products:List<Product>)
+
+    @Query("UPDATE productTable SET quantity = :qty WHERE productId = :Pid")
+    suspend fun updateQuantity(qty:Int,Pid:Int)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertItemToCart(item:Cart)
+
+    @Query("SELECT quantitiy FROM cartTable WHERE productId LIKE :id")
+    suspend fun exists (id:Int): Int?
+
+    @Delete
+    suspend fun deleteFromCart(item : Cart)
+
+    @Query("SELECT * FROM cartTable")
+    fun getCartItems() : Flow<List<Cart>>
 
 }
