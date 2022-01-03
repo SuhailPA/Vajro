@@ -49,6 +49,9 @@ class ProductListScreen : Fragment() {
             viewModel.removeItemFromCart(it)
         }
 
+        viewModel.cartItems.observe(viewLifecycleOwner, Observer {
+            productAdapter.cart = it
+        })
         binding.goToCart.setOnClickListener {
             val action = ProductListScreenDirections.actionProductListScreenToCartFragment()
             navController.navigate(action)

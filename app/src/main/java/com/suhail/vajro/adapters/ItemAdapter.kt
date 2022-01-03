@@ -15,7 +15,7 @@ import com.suhail.vajro.R
 import com.suhail.vajro.data.Cart
 import com.suhail.vajro.data.Product
 
-class ItemAdapter (): RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
+class ItemAdapter (var cart: List<Cart>?=null): RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
 
     inner class ViewHolderClass(view:View):RecyclerView.ViewHolder(view){
         val imageView :ImageView = view.findViewById(R.id.itemImageViewProduct)
@@ -36,19 +36,17 @@ class ItemAdapter (): RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
         }
 
     }
-    private val differCallbackCart = object : DiffUtil.ItemCallback<Cart>(){
-        override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean {
-            return oldItem.productId == newItem.productId
-        }
-
-        override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean {
-            return oldItem == newItem
-        }
-
-
-    }
+//    private val differCallbackCart = object : DiffUtil.ItemCallback<Cart>(){
+//        override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean {
+//            return oldItem.productId == newItem.productId
+//        }
+//
+//        override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean {
+//            return oldItem == newItem
+//        }
+//    }
     val differ = AsyncListDiffer(this,differCallback)
-    val differCart = AsyncListDiffer(this,differCallbackCart)
+//    val differCart = AsyncListDiffer(this,differCallbackCart)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAdapter.ViewHolderClass {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout_product,parent,false)
@@ -57,6 +55,7 @@ class ItemAdapter (): RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
 
     override fun onBindViewHolder(holder: ItemAdapter.ViewHolderClass, position: Int) {
         val item = differ.currentList[position]
+        val cartItems = cart
         holder.imageView.load(item.image){
             placeholder(R.drawable.ic_twotone_hail_24)
             .transformations(RoundedCornersTransformation(30f))
@@ -64,6 +63,8 @@ class ItemAdapter (): RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
         holder.itemName.text = item.name
         holder.price.text = item.price
 
+        val itemCount = cartItems?.find { it.productId == item.productId }?.quantitiy ?: 0
+        holder.itemCount.text = itemCount.toString()
         holder.addProduct.setOnClickListener {
             val count = holder.itemCount.text.toString().toInt()
             holder.itemCount.text = count.plus(1).toString()
@@ -88,8 +89,6 @@ class ItemAdapter (): RecyclerView.Adapter<ItemAdapter.ViewHolderClass>() {
     fun setOnRemoveListner(listner: (Product) -> Unit){
         onRemoveItemClickListner = listner
     }
-
-
 
     override fun getItemCount(): Int {
         return differ.currentList.size

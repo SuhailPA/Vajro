@@ -33,7 +33,7 @@ class ProductRepository @Inject constructor(
 
     suspend fun addToCart(item:Cart) = productDoa.insertItemToCart(item)
 
-    suspend fun deleteFromCart(item: Cart) = productDoa.deleteFromCart(item)
+    suspend fun deleteFromCart(id: Int) = productDoa.deleteFromCart(id)
 
     suspend fun exists(id:Int) = productDoa.exists(id)
 

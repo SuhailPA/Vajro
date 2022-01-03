@@ -20,7 +20,7 @@ interface ProductDao {
     @Insert
     suspend fun insertProductsToProductTable(products:List<Product>)
 
-    @Query("UPDATE productTable SET quantity = :qty WHERE productId = :Pid")
+    @Query("UPDATE cartTable SET quantitiy = :qty WHERE productId = :Pid")
     suspend fun updateQuantity(qty:Int,Pid:Int)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -29,8 +29,8 @@ interface ProductDao {
     @Query("SELECT quantitiy FROM cartTable WHERE productId LIKE :id")
     suspend fun exists (id:Int): Int?
 
-    @Delete
-    suspend fun deleteFromCart(item : Cart)
+    @Query("DELETE FROM cartTable WHERE productId LIKE :id")
+    suspend fun deleteFromCart(id : Int)
 
     @Query("SELECT * FROM cartTable")
     fun getCartItems() : Flow<List<Cart>>
