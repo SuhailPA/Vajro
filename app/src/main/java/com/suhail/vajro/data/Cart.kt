@@ -5,10 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "cartTable")
 data class Cart(
-    var imageUrl :String,
-    var name : String,
-    var price : String,
-    var quantitiy : Int,
+    var imageUrl: String,
+    var name: String,
+    var price: String,
+    var quantitiy: Int,
     @PrimaryKey(autoGenerate = false)
-    var productId : String
+    var productId: String
 )

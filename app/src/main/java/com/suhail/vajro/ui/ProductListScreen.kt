@@ -1,17 +1,15 @@
 package com.suhail.vajro.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.suhail.vajro.R
-import com.suhail.vajro.adapters.CartAdapter
 import com.suhail.vajro.adapters.ItemAdapter
 import com.suhail.vajro.data.Cart
 import com.suhail.vajro.databinding.FragmentProductListScreenBinding
@@ -20,9 +18,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProductListScreen : Fragment() {
-    lateinit var binding : FragmentProductListScreenBinding
-    private val viewModel : ProductScreenViewModel by viewModels()
-    lateinit var productAdapter : ItemAdapter
+    lateinit var binding: FragmentProductListScreenBinding
+    private val viewModel: ProductScreenViewModel by viewModels()
+    lateinit var productAdapter: ItemAdapter
     lateinit var navController: NavController
     var cartItems = mutableListOf<Cart>()
     override fun onCreateView(
@@ -35,14 +33,14 @@ class ProductListScreen : Fragment() {
         productAdapter = ItemAdapter()
         binding.productRecyclerView.apply {
             adapter = productAdapter
-            layoutManager = GridLayoutManager(requireContext(),2)
+            layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
-        viewModel.allProducts.observe(viewLifecycleOwner,{products->
+        viewModel.allProducts.observe(viewLifecycleOwner, { products ->
             productAdapter.differ.submitList(products.data)
         })
 
-        productAdapter.setOnClickListner{
+        productAdapter.setOnClickListner {
             viewModel.addItemToCart(it)
         }
         productAdapter.setOnRemoveListner {

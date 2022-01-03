@@ -1,6 +1,8 @@
 package com.suhail.vajro.viewModels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.suhail.vajro.data.Cart
 import com.suhail.vajro.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,19 +14,20 @@ import javax.inject.Inject
 @HiltViewModel
 class CartScreenViewModel @Inject constructor(
     private val repository: ProductRepository
-): ViewModel() {
+) : ViewModel() {
 
     val cartItems = MutableLiveData<List<Cart>>()
 
     init {
         loadData()
     }
+
     private fun loadData() {
         viewModelScope.launch {
             repository.getAllItemsFromCart()
                 .distinctUntilChanged()
                 .collect {
-                    it?.let {
+                    it.let {
                         cartItems.value = it
                     }
                 }

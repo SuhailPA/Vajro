@@ -18,22 +18,21 @@ import javax.inject.Singleton
 object ProductModule {
 
 
-
     @Provides
     @Singleton
-    fun providesRetrofit() : Retrofit = Retrofit.Builder()
+    fun providesRetrofit(): Retrofit = Retrofit.Builder()
         .baseUrl(ProductAPI.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
     @Provides
     @Singleton
-    fun providesProductAPI(retrofit: Retrofit) : ProductAPI =
+    fun providesProductAPI(retrofit: Retrofit): ProductAPI =
         retrofit.create(ProductAPI::class.java)
 
     @Provides
     @Singleton
     fun providesDatabase(app: Application): ProductDatabase =
-        Room.databaseBuilder(app, ProductDatabase :: class.java, "product_database")
+        Room.databaseBuilder(app, ProductDatabase::class.java, "product_database")
             .build()
 }

@@ -10,12 +10,12 @@ import javax.inject.Inject
 
 class ProductRepository @Inject constructor(
     private val api: ProductAPI,
-    private val database : ProductDatabase
+    private val database: ProductDatabase
 ) {
-    private val productDoa =database.productDao()
+    private val productDoa = database.productDao()
 
-    fun allProductItems ()= networkBoundResource(
-        query ={
+    fun allProductItems() = networkBoundResource(
+        query = {
             productDoa.getAllItems()
         },
         fetch = {
@@ -31,13 +31,13 @@ class ProductRepository @Inject constructor(
         }
     )
 
-    suspend fun addToCart(item:Cart) = productDoa.insertItemToCart(item)
+    suspend fun addToCart(item: Cart) = productDoa.insertItemToCart(item)
 
     suspend fun deleteFromCart(id: Int) = productDoa.deleteFromCart(id)
 
-    suspend fun exists(id:Int) = productDoa.exists(id)
+    suspend fun exists(id: Int) = productDoa.exists(id)
 
-    suspend fun updateQuantity (quantity:Int,id:Int) = productDoa.updateQuantity(quantity,id)
+    suspend fun updateQuantity(quantity: Int, id: Int) = productDoa.updateQuantity(quantity, id)
 
     fun getAllItemsFromCart() = productDoa.getCartItems()
 

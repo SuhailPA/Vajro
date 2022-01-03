@@ -1,7 +1,10 @@
 package com.suhail.vajro.viewModels
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.suhail.vajro.data.Cart
 import com.suhail.vajro.data.Product
 import com.suhail.vajro.repository.ProductRepository
@@ -14,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductScreenViewModel @Inject constructor(
     private val repository: ProductRepository
-): ViewModel() {
+) : ViewModel() {
 
     val allProducts = repository.allProductItems().asLiveData()
 
@@ -24,16 +27,16 @@ class ProductScreenViewModel @Inject constructor(
         loadData()
     }
 
-    fun addItemToCart(item:Product){
-        var quantity : Int = 1
+    fun addItemToCart(item: Product) {
+        var quantity: Int = 1
         viewModelScope.launch {
-            Log.i("working","Enter")
+            Log.i("working", "Enter")
             val currentQuantity = repository.exists(item.productId.toInt())
-            if (currentQuantity != null){
+            if (currentQuantity != null) {
                 Log.i("working", currentQuantity.toString())
-                repository.updateQuantity(currentQuantity.plus(1),item.productId.toInt())
-            }else{
-                val cartItem = Cart(item.image,item.name,item.price,quantity,item.productId)
+                repository.updateQuantity(currentQuantity.plus(1), item.productId.toInt())
+            } else {
+                val cartItem = Cart(item.image, item.name, item.price, quantity, item.productId)
                 repository.addToCart(cartItem)
             }
 
@@ -45,7 +48,7 @@ class ProductScreenViewModel @Inject constructor(
             repository.getAllItemsFromCart()
                 .distinctUntilChanged()
                 .collect {
-                    it?.let {
+                    it.let {
                         cartItems.value = it
                     }
                 }
@@ -54,16 +57,15 @@ class ProductScreenViewModel @Inject constructor(
 
     }
 
-    fun removeItemFromCart(item:Product){
+    fun removeItemFromCart(item: Product) {
 
         viewModelScope.launch {
             val currentQuantity = repository.exists(item.productId.toInt())
-            if (currentQuantity != null && currentQuantity == 1){
+            if (currentQuantity != null && currentQuantity == 1) {
                 repository.deleteFromCart(item.productId.toInt())
 
-            }
-            else if (currentQuantity !=null ){
-                repository.updateQuantity(currentQuantity.minus(1),item.productId.toInt())
+            } else if (currentQuantity != null) {
+                repository.updateQuantity(currentQuantity.minus(1), item.productId.toInt())
             }
 
         }
