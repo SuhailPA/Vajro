@@ -10,7 +10,6 @@ import com.suhail.vajro.data.Product
 import com.suhail.vajro.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,7 +45,6 @@ class ProductScreenViewModel @Inject constructor(
     private fun loadData() {
         viewModelScope.launch {
             repository.getAllItemsFromCart()
-                .distinctUntilChanged()
                 .collect {
                     it.let {
                         cartItems.value = it

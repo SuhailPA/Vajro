@@ -1,15 +1,16 @@
 package com.suhail.vajro.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.suhail.vajro.R
 import com.suhail.vajro.adapters.ItemAdapter
 import com.suhail.vajro.data.Cart
 import com.suhail.vajro.databinding.FragmentProductListScreenBinding
@@ -21,6 +22,7 @@ class ProductListScreen : Fragment() {
     lateinit var binding: FragmentProductListScreenBinding
     private val viewModel: ProductScreenViewModel by viewModels()
     lateinit var productAdapter: ItemAdapter
+    lateinit var cartItemCount: TextView
     lateinit var navController: NavController
     var cartItems = mutableListOf<Cart>()
     override fun onCreateView(
@@ -31,6 +33,7 @@ class ProductListScreen : Fragment() {
         binding = FragmentProductListScreenBinding.inflate(layoutInflater)
         navController = findNavController()
         productAdapter = ItemAdapter()
+        setHasOptionsMenu(true)
         binding.productRecyclerView.apply {
             adapter = productAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
@@ -50,14 +53,28 @@ class ProductListScreen : Fragment() {
         viewModel.cartItems.observe(viewLifecycleOwner, Observer {
             productAdapter.cart = it
         })
-        binding.goToCart.setOnClickListener {
-            val action = ProductListScreenDirections.actionProductListScreenToCartFragment()
-            navController.navigate(action)
-        }
+
+
 
         return binding.root
 
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        Log.i("menuItem", "working")
+        inflater.inflate(R.menu.menu_toolbar, menu)
+        var menuItem = menu.findItem(R.id.cartItems)
+        val actionView = menuItem.actionView
+        cartItemCount = actionView.findViewById<TextView>(R.id.itemCountNumber)
+        viewModel.cartItems.observe(viewLifecycleOwner, Observer {
+            cartItemCount.text = it.size.toString()
+        })
+        actionView.setOnClickListener {
+            onOptionsItemSelected(menuItem)
+            val action = ProductListScreenDirections.actionProductListScreenToCartFragment()
+            navController.navigate(action)
+
+        }
+    }
 }
