@@ -4,7 +4,7 @@
     android:layout_height="60dp"
     android:layout_width="match_parent"
     android:id="@+id/toolbar"
-    android:background="@color/white"
+    android:background="#D6D4D4"
     android:layout_alignParentTop="true"
     app:layout_scrollFlags="scroll|enterAlways"
     app:menu="@menu/menu_toolbar"
