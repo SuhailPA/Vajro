@@ -7,7 +7,6 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/itemCardViewProduct"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         app:cardCornerRadius="15dp"
@@ -18,8 +17,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-
             android:layout_width="match_parent"
+            android:padding="10dp"
             android:layout_height="match_parent">
 
 
@@ -39,6 +38,7 @@
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:textStyle="bold"
+                android:textColor="@color/secondaryColor"
                 android:text="TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -50,6 +50,7 @@
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:text="TextView"
+                android:textColor="@color/secondaryColor"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@+id/itemPriceProduct"
                 app:layout_constraintEnd_toStartOf="@+id/itemPriceProduct"
@@ -87,8 +88,9 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/addItemButton"
                     android:layout_width="0dp"
+                    android:backgroundTint="@color/primaryColor"
                     android:layout_height="wrap_content"
-                    android:text="+"
+                    android:text="@string/to_add_the_item"
                     app:cornerRadius="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/guideline4"
@@ -107,8 +109,9 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/removeItemProduct"
                     android:layout_width="0dp"
+                    android:backgroundTint="@color/primaryColor"
                     android:layout_height="wrap_content"
-                    android:text="-"
+                    android:text="@string/to_remove_the_item"
                     app:cornerRadius="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -131,9 +134,10 @@
                 android:id="@+id/addButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add"
+                android:text="@string/text_to_button_mainlayout"
                 app:cornerRadius="15dp"
-                android:backgroundTint="#FF6F00"
+                android:textColor="@color/colorToTextInButton"
+                android:backgroundTint="@color/primaryColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -37,7 +37,11 @@ class ItemDetailFragment : Fragment() {
         })
 
         binding.addButtonInDetailedPage.setOnClickListener {
+            viewModel.addItemToCart()
+        }
 
+        binding.removeButtonInDetailedPage.setOnClickListener {
+            viewModel.removeItemFromCart()
         }
 
         (activity as MainActivity?)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -49,6 +53,12 @@ class ItemDetailFragment : Fragment() {
         viewModel.productPrice.observe(viewLifecycleOwner, Observer {
             binding.productPrice.text = it
         })
+
+        viewModel.productQuantity.observe(viewLifecycleOwner, Observer {
+            binding.itemCountInDetailedPage.text = it.toString()
+        })
+
+
         setHasOptionsMenu(true)
         return binding.root
     }
