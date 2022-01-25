@@ -41,5 +41,6 @@ class ProductRepository @Inject constructor(
 
     fun getAllItemsFromCart() = productDoa.getCartItems()
 
+    fun searchDatabase(query: String) = productDoa.searchDatabase(query)
 
 }

@@ -9,6 +9,7 @@ import com.suhail.vajro.data.Cart
 import com.suhail.vajro.data.Product
 import com.suhail.vajro.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -54,6 +55,10 @@ class ProductScreenViewModel @Inject constructor(
         }
 
     }
+
+
+    fun searchDatabase(searchQuery : String) =
+        repository.searchDatabase(searchQuery).asLiveData()
 
     fun removeItemFromCart(item: Product) {
 

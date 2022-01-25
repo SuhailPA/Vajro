@@ -13,10 +13,22 @@
         <action
             android:id="@+id/action_productListScreen_to_cartFragment"
             app:destination="@id/cartFragment" />
+        <action
+            android:id="@+id/action_productListScreen_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.suhail.vajro.ui.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" />
+    <fragment
+        android:id="@+id/itemDetailFragment"
+        android:name="com.suhail.vajro.ui.ItemDetailFragment"
+        android:label="fragment_item_detail"
+        tools:layout="@layout/fragment_item_detail" >
+        <argument
+            android:name="itemDetails"
+            app:argType="com.suhail.vajro.data.Product" />
+    </fragment>
 </navigation>

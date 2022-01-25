@@ -1,10 +1,13 @@
 package com.suhail.vajro.data
 
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "productTable")
 data class Product(
     @SerializedName("description")
@@ -32,4 +35,4 @@ data class Product(
     val thumb: String,
     @SerializedName("zoom_thumb")
     val zoomThumb: String
-)
+) :Parcelable

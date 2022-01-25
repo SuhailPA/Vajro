@@ -38,4 +38,7 @@ interface ProductDao {
     @Query("SELECT * FROM cartTable")
     fun getCartItems(): Flow<List<Cart>>
 
+    @Query("SELECT * FROM productTable WHERE name LIKE :query")
+    fun searchDatabase(query:String):Flow<List<Product>>
+
 }

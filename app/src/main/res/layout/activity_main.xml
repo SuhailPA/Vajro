@@ -16,8 +16,9 @@
         android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
         app:elevation="0dp">
 
+
         <include
-            android:id="@+id/toolbar"
+            android:id="@+id/mainToolbar"
             layout="@layout/toolbar" />
     </com.google.android.material.appbar.AppBarLayout>
 

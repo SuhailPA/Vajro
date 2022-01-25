@@ -71,6 +71,10 @@ class ItemAdapter(var cart: List<Cart>? = null) :
         }
         holder.itemCount.text = itemCount.toString()
 
+        holder.itemView.setOnClickListener {
+            onProductClickListner?.let{it(item)}
+        }
+
         holder.addProduct.setOnClickListener {
             val count = holder.itemCount.text.toString().toInt()
             holder.itemCount.text = count.plus(1).toString()
@@ -102,12 +106,18 @@ class ItemAdapter(var cart: List<Cart>? = null) :
 
     private var onAddItemClickListner: ((Product) -> Unit)? = null
 
+    private var onProductClickListner : ((Product) -> Unit) ?= null
+
     fun setOnClickListner(listner: (Product) -> Unit) {
         onAddItemClickListner = listner
     }
 
     fun setOnRemoveListner(listner: (Product) -> Unit) {
         onRemoveItemClickListner = listner
+    }
+
+    fun itemClickListner(listner: (Product) -> Unit){
+        onProductClickListner = listner
     }
 
     override fun getItemCount(): Int {
